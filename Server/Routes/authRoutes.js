@@ -13,10 +13,12 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
+  
   (req, res) => {
-    // ✅ Send Google access token to frontend
-    res.redirect(`http://localhost:3001/dashboard?accessToken=${req.user.accessToken}`);
+    // ✅ Send Google access token to frontend 
+    res.redirect(`http://localhost:5173/?token=${req.user.googleAccessToken}`);
   }
+  
 );
 
 module.exports = router;

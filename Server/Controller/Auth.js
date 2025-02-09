@@ -26,6 +26,7 @@ passport.use(
             googleRefreshToken: refreshToken,  // ✅ Store refresh token
           });
           await user.save();
+          
         } else {
           user.googleRefreshToken = refreshToken; // ✅ Update refresh token if changed
           await user.save();
