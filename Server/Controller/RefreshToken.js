@@ -1,21 +1,28 @@
 const axios = require("axios");
 const dotenv=require('dotenv');
 dotenv.config();    
-async function refreshAccessToken(refreshToken) {
+const refreshAccessToken = async ( refreshToken) => {
   try {
-    const response = await axios.post("https://oauth2.googleapis.com/token", null, {
+    
+    const response = await axios.post('https://oauth2.googleapis.com/token', null, {
       params: {
         client_id: process.env.GOOGLE_CLIENT_ID,
         client_secret: process.env.GOOGLE_CLIENT_SECRET,
-        refresh_token: refreshToken,
         grant_type: "refresh_token",
+        refresh_token: refreshToken,
       },
     });
+console.log(response);
+    const { access_token } = response.data;
 
-    return response.data.access_token;  // ✅ Return new access token
+    // Update access token in DB
+    
+
+    return access_token;
   } catch (error) {
-    console.error("Error refreshing access token:", error.response?.data || error.message);
+    console.error("Failed to refresh token:", error.response.data);
     return null;
   }
-}
+};
 module.exports=refreshAccessToken;
+

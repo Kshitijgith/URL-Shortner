@@ -15,17 +15,10 @@ connectDB();
 app.use(cors());
 
 // ✅ Setup Express Session
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+
 
 // ✅ Initialize Passport
-app.use(passport.initialize());
-app.use(passport.session());
+
 app.use(express.json());
 
 // ✅ Home Route

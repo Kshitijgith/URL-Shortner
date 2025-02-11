@@ -6,8 +6,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 const App = () => {
   const location=useLocation();
   var params = new URLSearchParams(location.search);
-    var token = params.get("token");
-    
+    var token = params.get("access_token");
+  console.log(token);
     
   const navigate=useNavigate();
   const [url, setUrl] = useState("")
@@ -17,7 +17,7 @@ const App = () => {
 
     // Get token from query params
     params = new URLSearchParams(location.search);
-     token = params.get("token");
+     
 
     if (token) {
       localStorage.setItem("authToken", token); // ✅ Store token in localStorage
@@ -82,7 +82,7 @@ const logout=()=>{
           <h1 className="text-2xl font-bold text-gray-900">URL Shortener</h1>
           {!token?<button
   className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-  onClick={() => window.location.href = "http://localhost:3001/auth/google/callback"} // Replace with your URL
+  onClick={() => window.location.href = "http://localhost:3001/auth/google"} // Replace with your URL
 >
   Login with Google
 </button>:<button

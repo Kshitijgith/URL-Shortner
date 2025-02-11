@@ -9,6 +9,11 @@ const linkSchema = new mongoose.Schema({
       counter: {
         type: Number,
         default: 0, // Keeps track of the next shortId
+      },
+      URL: {
+        type: Map,
+        of: String, 
+        required: false,
       }
 }, { timestamps: true });
 
