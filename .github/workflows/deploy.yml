@@ -24,7 +24,7 @@ jobs:
 
       - name: Build and Tag Docker Image
         run: |
-          cd server  # Navigate to the server folder
+          cd Server  # Navigate to the server folder
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
           docker tag $ECR_REGISTRY/$ECR_REPOSITORY:latest $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
