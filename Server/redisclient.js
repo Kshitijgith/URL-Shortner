@@ -1,7 +1,7 @@
 const redis = require('redis');
 
 const client = redis.createClient({
-  host: 'redis-container',
+  url: "redis://host.docker.internal:6379",
   port: 6379
 });
 
