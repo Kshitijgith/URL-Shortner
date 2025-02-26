@@ -18,7 +18,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}  # Use the region from GitHub Secret
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Login to AWS ECR
         id: login-ecr
@@ -29,9 +29,19 @@ jobs:
           echo "ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}" >> $GITHUB_ENV
           echo "ECR_REPOSITORY=${{ secrets.ECR_REPOSITORY }}" >> $GITHUB_ENV
 
+      - name: Create .env File
+        run: |
+               echo "PORT=${{ secrets.PORT }}" >> Server/.env
+               echo "MONGO_URL=${{ secrets.MONGO_URL }}" >> Server/.env
+               echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> Server/.env
+               echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> Server/.env
+               echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> Server/.env
+        shell: bash
+
+
       - name: Build and Tag Docker Image
         run: |
-          cd Server  # Navigate to the server folder
+          cd Server
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
           docker tag $ECR_REGISTRY/$ECR_REPOSITORY:latest $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
