@@ -10,7 +10,7 @@ const GetLink=async (req, res) => {
      
     const shortUrl = `https://url-shortner-g9iponrendercom/${req.params.shortId}`;
     console.log(req.params.shortId)
-    
+    console.log(shortUrl)
      
   const url=await client.get(String(req.params.shortId))
   console.log(url);
@@ -26,6 +26,7 @@ const GetLink=async (req, res) => {
     console.log(dbEntry.urlMap.get(shortUrl));
 
        client.set(String(req.params.shortId), dbEntry.urlMap.get(shortUrl));
+       console.log(dbEntry.urlMap.get(shortUrl))
     res.redirect(dbEntry.urlMap.get(shortUrl));
   }
 
