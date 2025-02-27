@@ -10,7 +10,7 @@ const GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
 const GOOGLE_USERINFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo";
 
 router.get("/google", (req, res) => {
-  const authUrl = `${GOOGLE_AUTH_URL}?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=http://localhost:3001/auth/google/callback&response_type=code&scope=email%20profile&access_type=offline&prompt=consent`;
+  const authUrl = `${GOOGLE_AUTH_URL}?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=https://url-shortner-g9ip.onrender.com/auth/google/callback&response_type=code&scope=email%20profile&access_type=offline&prompt=consent`;
   res.redirect(authUrl);
 });
 
@@ -24,7 +24,7 @@ router.get("/google/callback", async (req, res) => {
       params: {
         client_id: process.env.GOOGLE_CLIENT_ID,
         client_secret: process.env.GOOGLE_CLIENT_SECRET,
-        redirect_uri: 'http://localhost:3001/auth/google/callback',
+        redirect_uri: 'https://url-shortner-g9ip.onrender.com/auth/google/callback',
         grant_type: "authorization_code",
         code,
       },
