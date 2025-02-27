@@ -58,10 +58,10 @@ const GetLink=async (req, res) => {
     dbEntry.urlMap.set(newurl, url);
    
     dbEntry.URL.set(hashedKey,newurl);
-    
+   
     dbEntry.counter++;
     await dbEntry.save();
-   newurl=`https://url-shortner-g9ip.onrender.com/${dbEntry.counter}`
+     newurl=`https://url-shortner-g9ip.onrender.com/${dbEntry.counter-1}`
     return newurl
   }
   const StoreLink=async (req, res) => {
