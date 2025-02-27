@@ -23,7 +23,7 @@ app.use(express.json());
 
 // ✅ Home Route
 app.get("/", (req, res) => {
-  res.json("Welcome to URL shortener");
+  res.send("Welcome to URL shortener");
 });
 
 // ✅ Dashboard Route with Google Access Token Verification
