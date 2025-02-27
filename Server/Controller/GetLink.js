@@ -61,6 +61,7 @@ const GetLink=async (req, res) => {
     let accessToken = req.headers.authorization;
    
     const { url } = req.body;
+    console.log(url);
     if (!accessToken) {
       console.log('go')
       
@@ -77,7 +78,7 @@ const GetLink=async (req, res) => {
       }
      
        const hashedKey = hashKey(url);
-console.log(hashedkey);
+console.log(hashedKey);
 
       
     if (!url) return res.status(400).json({ error: "URL is required" });
@@ -106,8 +107,9 @@ console.log(hashedkey);
             var newurl
             const hashedKey = hashKey(url);
             newurl=await CreateLink(hashedKey,newurl)
+console.log(newurl);
             res.json({newurl})
-            
+           
           }
         }
       }
