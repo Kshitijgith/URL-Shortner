@@ -83,6 +83,7 @@ console.log(hashedKey);
       
     if (!url) return res.status(400).json({ error: "URL is required" });
     newurl=await CreateLink(hashedKey,newurl,url)
+    console.log(newurl);
     res.json({newurl});
     } catch (err) {
       
