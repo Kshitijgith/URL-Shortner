@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const linkSchema = new mongoose.Schema({
     urlMap: {
         type: Map,
-        of: String, // Key: Shortened URL, Value: Original URL
+        of: String, 
         required: true,
       },
       counter: {
