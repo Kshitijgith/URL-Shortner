@@ -1,14 +1,17 @@
-const redis = require('redis');
+const redis = require("redis");
 
 const client = redis.createClient({
-  url: "redis://host.docker.internal:6379",
-  port: 6379
+  socket: {
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+  },
+  password: process.env.REDIS_PASSWORD,
 });
 
-client.on('error', (err) => {
-  console.error('Redis error:', err);
-});
-client.connect(); // Required for Redis v4+
+client.connect()
+  .then(() => console.log("Connected to Redis"))
+  .catch(err => console.error("Redis connection error:", err));
+
 
 
 
