@@ -55,6 +55,7 @@ const GetLink=async (req, res) => {
     return newurl;
   }
   const StoreLink=async (req, res) => {
+    console.log('entered')
     const hashKey = (url) => crypto.createHash('sha256').update(url).digest('hex');
 //console.log(req.headers.authorization);
     let accessToken = req.headers.authorization;
@@ -76,7 +77,7 @@ const GetLink=async (req, res) => {
       }
      
        const hashedKey = hashKey(url);
-
+console.log(hashedkey);
 
       
     if (!url) return res.status(400).json({ error: "URL is required" });
