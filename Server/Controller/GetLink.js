@@ -8,7 +8,7 @@ const crypto = require('crypto');
 //Below is GetLink function which finds store link in db and in cache
 const GetLink=async (req, res) => {
      
-    const shortUrl = `http://16.16.162.71:3001/${req.params.shortId}`;
+    const shortUrl = `http://localhost:3001/${req.params.shortId}`;
     
      
   const url=await client.get(String(req.params.shortId))
@@ -43,7 +43,7 @@ const GetLink=async (req, res) => {
       return newurl
      }
     // Generate a new short URL
-     newurl = `http://16.16.162.71:3001/${dbEntry.counter}`
+     newurl = `http://localhost:3001/${dbEntry.counter}`
     
     // ✅ Correct way to store with expiry
     let val=String(dbEntry.counter)
@@ -63,7 +63,7 @@ const GetLink=async (req, res) => {
     if (!accessToken) {
       console.log('go')
       
-      return res.redirect("http://16.16.162.71:3001/auth/google");
+      return res.redirect("http://localhost:3001/auth/google");
     }
   
     try {
@@ -111,7 +111,7 @@ const GetLink=async (req, res) => {
         }
       }
     
-      return res.json("http://16.16.162.71:3001/auth/google/callback");
+      return res.json("http://localhost:3001/auth/google/callback");
     }
   
     
