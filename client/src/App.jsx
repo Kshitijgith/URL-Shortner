@@ -82,7 +82,7 @@ const logout=()=>{
           <h1 className="text-2xl font-bold text-gray-900">URL Shortener</h1>
           {!token?<button
   className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-  onClick={() => window.location.href = "https://url-shortner-g9ip.onrender.com/auth/google"} // Replace with your URL
+  onClick={() => window.location.href = "url-shortner-g9ip.onrender.com/auth/google"} // Replace with your URL
 >
   Login with Google
 </button>:<button

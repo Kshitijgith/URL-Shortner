@@ -10,9 +10,10 @@ const GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
 const GOOGLE_USERINFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo";
 
 router.get("/google", (req, res) => {
-  const authUrl = `${GOOGLE_AUTH_URL}?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=https://url-shortner-g9ip.onrender.com/auth/google/callback&response_type=code&scope=email%20profile&access_type=offline&prompt=consent`;
+  const authUrl = `${GOOGLE_AUTH_URL}?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=${encodeURIComponent("https://url-shortner-g9ip.onrender.com/auth/google/callback")}&response_type=code&scope=email%20profile&access_type=offline&prompt=consent`;
   res.redirect(authUrl);
 });
+
 
 
 // ✅ Google OAuth Callback

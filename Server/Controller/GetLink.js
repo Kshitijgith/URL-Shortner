@@ -8,10 +8,11 @@ const crypto = require('crypto');
 //Below is GetLink function which finds store link in db and in cache
 const GetLink=async (req, res) => {
      
-    const shortUrl = `https://url-shortner-g9iponrendercom/${req.params.shortId}`;
+    const shortUrl = `url-shortner-g9iponrendercom/${req.params.shortId}`;
     console.log(req.params.shortId)
     console.log(shortUrl)
-     
+     client.flushAll();
+     res.redirect('/');
   const url=await client.get(String(req.params.shortId))
   console.log(url);
    if(url){
@@ -47,7 +48,7 @@ const GetLink=async (req, res) => {
      }
      
     // Generate a new short URL
-     newurl = `https://url-shortner-g9iponrendercom/${dbEntry.counter}`
+     newurl = `url-shortner-g9iponrendercom/${dbEntry.counter}`
     
     // ✅ Correct way to store with expiry
     let val=String(dbEntry.counter)
@@ -61,7 +62,7 @@ const GetLink=async (req, res) => {
    
     dbEntry.counter++;
     await dbEntry.save();
-     newurl=`https://url-shortner-g9ip.onrender.com/${dbEntry.counter-1}`
+     newurl=`url-shortner-g9ip.onrender.com/${dbEntry.counter-1}`
     return newurl
   }
   const StoreLink=async (req, res) => {
@@ -75,7 +76,7 @@ const GetLink=async (req, res) => {
     if (!accessToken) {
       console.log('go')
       
-      return res.redirect("https://url-shortner-g9ip.onrender.com/auth/google");
+      return res.redirect("http/auth/google");
     }
   
     try {
@@ -125,7 +126,7 @@ console.log(newurl);
         }
       }
     
-      return res.json("https://url-shortner-g9ip.onrender.com/auth/google/callback");
+      return res.json("http/auth/google/callback");
     }
   
     
