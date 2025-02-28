@@ -2,7 +2,7 @@ import React from 'react'
 import { useState,useEffect } from 'react'
 import axios from 'axios'
 import { useLocation, useNavigate } from "react-router-dom";
-
+import GoogleButton from 'react-google-button'
 const App = () => {
   const location=useLocation();
   var params = new URLSearchParams(location.search);
@@ -80,12 +80,13 @@ const logout=()=>{
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-900">URL Shortener</h1>
-          {!token?<button
+          {!token?<GoogleButton  type="dark"
   className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-  onClick={() => window.location.href = "url-shortner-g9ip.onrender.com/auth/google"} // Replace with your URL
->
-  Login with Google
-</button>:<button
+  onClick={() => window.location.href = "https://url-shortner-g9ip.onrender.com/auth/google"} 
+  // // Replace with your URL
+  />
+
+:<button
   className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
   onClick={()=>{logout()}}
 >
