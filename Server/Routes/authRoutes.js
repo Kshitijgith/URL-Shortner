@@ -51,7 +51,7 @@ console.log(userInfo);
     await user.save();
 
     res.redirect(
-      `http://localhost:5173/dashboard?access_token=${access_token}`
+      `https://url-shortner-steel-theta.vercel.app/dashboard?access_token=${access_token}`
     );
   } catch (error) {
     console.error(error);
