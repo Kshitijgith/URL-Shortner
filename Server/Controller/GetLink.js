@@ -6,9 +6,9 @@ const client=require('../redisclient');
 const crypto = require('crypto');
 
 //Below is GetLink function which finds store link in db and in cache
+
 const GetLink=async (req, res) => {
   console.log('under');
-     
     const shortUrl = `url-shortner-g9iponrendercom/${req.params.shortId}`;
     console.log(req.params.shortId)
     console.log(shortUrl)
