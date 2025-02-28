@@ -7,6 +7,7 @@ const crypto = require('crypto');
 
 //Below is GetLink function which finds store link in db and in cache
 const GetLink=async (req, res) => {
+  console.log('under');
      
     const shortUrl = `url-shortner-g9iponrendercom/${req.params.shortId}`;
     console.log(req.params.shortId)
@@ -42,7 +43,14 @@ const GetLink=async (req, res) => {
     }
     if(dbEntry.URL.has(hashedKey)){
       newurl=dbEntry.URL.get(hashedKey)
+
       console.log( newurl);
+      console.log(typeof(newurl))
+      let lastSegment = newurl.split("/").pop(); 
+    
+    // Update newurl with the new base URL + last segment
+    newurl = `https://url-shortner-g9ip.onrender.com/${lastSegment}`;
+
       return newurl
      }
      
@@ -61,7 +69,7 @@ const GetLink=async (req, res) => {
    
     dbEntry.counter++;
     await dbEntry.save();
-     newurl=`url-shortner-g9ip.onrender.com/${dbEntry.counter-1}`
+     newurl=`https://url-shortner-g9ip.onrender.com/${dbEntry.counter-1}`
     return newurl
   }
   const StoreLink=async (req, res) => {

@@ -66,6 +66,7 @@ const logout=()=>{
       })
     console.log(response);
       setShortUrl(response.data.newurl)
+      console.log
     } catch (err) {
       setError(err.message)
     } finally {
@@ -127,14 +128,11 @@ const logout=()=>{
   <div className="mt-4 p-4 bg-gray-100 rounded-lg shadow-md">
     <p className="text-sm font-medium text-gray-700">Shortened URL:</p>
     <div className="flex items-center space-x-2 mt-2">
-      <a
-        href={shortUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-blue-600 font-medium hover:underline break-all"
-      >
-        {shortUrl}
-      </a>
+    <button  
+  className="bg-slate-400 text-black   font-bold h-12 w-72 rounded"
+  onClick={() => window.location.href =shortUrl} 
+  
+  >{shortUrl}</button>
       <button
         onClick={() => navigator.clipboard.writeText(shortUrl)}
         className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition"
