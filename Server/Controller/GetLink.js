@@ -26,7 +26,7 @@ const GetLink=async (req, res) => {
     }
     console.log(dbEntry.urlMap.get(shortUrl));
 
-       client.set(String(req.params.shortId), dbEntry.urlMap.get(shortUrl));
+       client.set(String(req.params.shortId), dbEntry.urlMap.get(shortUrl), 'EX', 86400); // 24 hours = 86400 seconds
        console.log(dbEntry.urlMap.get(shortUrl))
     res.redirect(dbEntry.urlMap.get(shortUrl));
   }
