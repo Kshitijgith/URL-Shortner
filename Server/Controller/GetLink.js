@@ -108,12 +108,13 @@ const GetLink=async (req, res) => {
       if (err.response?.status === 400) {
         console.error("Token Expired. Refreshing...");
     
-        // 🔹 Find user based on stored email (use accessToken to get email)
-        // const response = await axios.get(
-        //   https://oauth2.googleapis.com/tokeninfo?access_token=${accessToken}
-        // );
+        const response = await axios.get(
+        `https://oauth2.googleapis.com/tokeninfo?access_token=${accessToken}`
+      );
+    let Email=response.data.email
+        const user = await User.findOne({ email:Email});
     
-        const user = await User.findOne({ email:'kshitijkamble30@gmail.com'});
+        
          
         if (user && user.googleRefreshToken) {
           const newAccessToken = await refreshAccessToken(user.googleRefreshToken);
@@ -127,7 +128,7 @@ const GetLink=async (req, res) => {
             const hashedKey = hashKey(url);
             newurl=await CreateLink(hashedKey,newurl)
 console.log(newurl);
-            res.json({newurl})
+            return res.json({newurl})
            
           }
         }
