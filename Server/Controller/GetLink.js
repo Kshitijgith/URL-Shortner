@@ -11,8 +11,7 @@ const GetLink=async (req, res) => {
     const shortUrl = `url-shortner-g9iponrendercom/${req.params.shortId}`;
     console.log(req.params.shortId)
     console.log(shortUrl)
-     client.flushAll();
-     res.redirect('/');
+     
   const url=await client.get(String(req.params.shortId))
   console.log(url);
    if(url){
