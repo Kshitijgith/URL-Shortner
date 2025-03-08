@@ -118,7 +118,7 @@ const GetLink=async (req, res) => {
          
         if (user && user.googleRefreshToken) {
           const newAccessToken = await refreshAccessToken(user.googleRefreshToken);
-          console.log('newtoken'newAccessToken)
+          console.log('newtoken',newAccessToken)
     console.log('true');
           if (newAccessToken) {
             console.log("Token refreshed successfully!");
