@@ -13,6 +13,7 @@ const refreshAccessToken = async ( refreshToken) => {
       },
     });
 console.log(response);
+    console.log(response.data)
     const { access_token } = response.data;
 
     // Update access token in DB
@@ -20,6 +21,8 @@ console.log(response);
 
     return access_token;
   } catch (error) {
+    console.log(error.response.data);
+    console.log('error occured ')
     console.error("Failed to refresh token:", error.response.data);
     return null;
   }
