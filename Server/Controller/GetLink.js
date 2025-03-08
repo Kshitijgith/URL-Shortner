@@ -113,12 +113,12 @@ const GetLink=async (req, res) => {
       );
     let Email=response.data.email
         const user = await User.findOne({ email:Email});
-    
-        
+       console.log(user);
+       console.log(err.response);
          
         if (user && user.googleRefreshToken) {
           const newAccessToken = await refreshAccessToken(user.googleRefreshToken);
-          console.log(newAccessToken)
+          console.log('newtoken'newAccessToken)
     console.log('true');
           if (newAccessToken) {
             console.log("Token refreshed successfully!");
