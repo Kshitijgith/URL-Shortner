@@ -77,75 +77,75 @@ const logout=()=>{
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">URL Shortener</h1>
-          {!token?<GoogleButton  type="dark"
-  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-  onClick={() => window.location.href = "https://url-shortner-g9ip.onrender.com/auth/google"} 
-  // // Replace with your URL
-  />
+    <div className="min-h-screen bg-gradient-to-r bg-slate-300 flex flex-col items-center p-4">
+    {/* Header */}
+    <header className="w-full max-w-3xl bg-white shadow-md rounded-lg p-4 flex justify-between items-center">
+      <h1 className="text-xl font-bold text-gray-800">URL Shortener</h1>
+      {!token ? (
+        <GoogleButton
+          type="dark"
+          className="shadow-md hover:shadow-lg"
+          onClick={() => window.location.href = "https://url-shortner-g9ip.onrender.com/auth/google"}
+        />
+      ) : (
+        <button
+          className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+          onClick={logout}
+        >
+          Logout
+        </button>
+      )}
+    </header>
 
-:<button
-  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-  onClick={()=>{logout()}}
->
-  Logout
-</button>}
+    {/* Main Content */}
+    <main className="w-full max-w-3xl bg-white shadow-lg rounded-lg p-6 mt-6">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="url" className="block text-sm font-medium text-gray-700">
+            Enter URL to shorten
+          </label>
+          <input
+            type="url"
+            id="url"
+            required
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            placeholder="https://example.com"
+          />
         </div>
-      </header>
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          {isLoading ? "Creating..." : "Create Short URL"}
+        </button>
+      </form>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="url" className="block text-sm font-medium text-gray-700">
-                Enter URL to shorten
-              </label>
-              <input
-                type="url"
-                id="url"
-                required
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                placeholder="https://example.com"
-              />
-            </div>
+      {error && <p className="mt-4 text-red-600 text-center">{error}</p>}
+
+      {shortUrl && (
+        <div className="mt-6 p-4 bg-gray-100 rounded-lg shadow-md text-center">
+          <p className="text-sm font-medium text-gray-700 mb-2">Shortened URL:</p>
+          <div className=" rounded-lg p-4 flex flex-col items-center">
             <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="text-black bg-blue-300 font-bold py-2 px-4 rounded w-full mb-2"
+              onClick={() => window.location.href = shortUrl}
             >
-              {isLoading ? "Creating..." : "Create Short URL"}
+              {shortUrl}
             </button>
-          </form>
-
-          {error && <p className="mt-4 text-red-600">{error}</p>}
-
-          {shortUrl && (
-  <div className="mt-4 p-4 bg-gray-100 rounded-lg shadow-md">
-    <p className="text-sm font-medium text-gray-700">Shortened URL:</p>
-    <div className="flex items-center space-x-2 mt-2">
-    <button  
-  className="bg-slate-400 text-black   font-bold h-12 w-72 rounded"
-  onClick={() => window.location.href =shortUrl} 
-  
-  >{shortUrl}</button>
-      <button
-        onClick={() => navigator.clipboard.writeText(shortUrl)}
-        className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition"
-      >
-        Copy
-      </button>
-    </div>
-  </div>
-)}
-
+            <button
+              onClick={() => navigator.clipboard.writeText(shortUrl)}
+              className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition w-full"
+            >
+              Copy
+            </button>
+          </div>
         </div>
-      </main>
-    </div>
+      )}
+    </main>
+  </div>
   )
 }
 

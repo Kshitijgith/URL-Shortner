@@ -4,7 +4,7 @@ dotenv.config();
 const refreshAccessToken = async ( refreshToken) => {
   try {
     
-    const response = await axios.post('https://oauth2.googleapis.com/token', null, {
+    const response = await axios.post('https://oauth2.googleapis.com/token',  {
       params: {
         client_id: process.env.GOOGLE_CLIENT_ID,
         client_secret: process.env.GOOGLE_CLIENT_SECRET,
@@ -20,7 +20,7 @@ console.log(response);
 
     return access_token;
   } catch (error) {
-    console.error("Failed to refresh token:", error.response.data);
+    console.log("Error whiloe refreshing")
     return null;
   }
 };

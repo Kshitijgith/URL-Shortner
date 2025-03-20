@@ -9,26 +9,48 @@ const crypto = require('crypto');
 
 const GetLink=async (req, res) => {
   console.log('under');
-    const shortUrl = `url-shortner-g9iponrendercom/${req.params.shortId}`;
+  
+  const ttl = await client.TTL(String(req.params.shortId));
+
+if (ttl === -1) {
+  console.log('Key exists but has no expiration.');
+} else if (ttl === -2) {
+  console.log('Key does not exist.');
+} else {
+  console.log(`Key will expire in ${ttl} seconds.`);
+}
+
+const keys = await client.keys('*'); // Fetch keys after flushing
+console.log(keys);
+
+for (let key of keys) {
+  const value = await client.get(key);
+  console.log(`${key}: ${value}`);
+}
+
+    const shortUrl = req.params.shortId;
     console.log(req.params.shortId)
-    console.log(shortUrl)
+    //console.log(shortUrl)
      
   const url=await client.get(String(req.params.shortId))
-  console.log(url);
+  
    if(url){
     console.log('reddis implemented');
+    console.log(url);
     return res.redirect(url);
    }
  
     const dbEntry = await Link.findOne();
-    if (!dbEntry || !dbEntry.urlMap.has(shortUrl)) {
+    if (!dbEntry || !dbEntry.URL.has(shortUrl)) {
       return res.status(404).json({ error: "Short URL not found" });
     }
-    console.log(dbEntry.urlMap.get(shortUrl));
+    console.log(dbEntry.URL.get(shortUrl));
 
-       client.set(String(req.params.shortId), dbEntry.urlMap.get(shortUrl));
-       console.log(dbEntry.urlMap.get(shortUrl))
-    res.redirect(dbEntry.urlMap.get(shortUrl));
+    client.setEx(String(req.params.shortId), 24 * 60 * 60, dbEntry.URL.get(shortUrl));
+
+    console.log('client set with expiry');
+       console.log(dbEntry.URL.get(shortUrl))
+    return res.redirect(dbEntry.URL.get(shortUrl));
   }
 
 
@@ -38,7 +60,7 @@ const GetLink=async (req, res) => {
     let dbEntry = await Link.findOne(); // Fetch the single document
      console.log(dbEntry);
     if (!dbEntry) {
-      dbEntry = new Link({ urlMap: new Map(), counter: 0 ,URL: new Map()});
+      dbEntry = new Link({ URL: new Map()});
       console.log(dbEntry);
     }
     if(dbEntry.URL.has(hashedKey)){
@@ -46,44 +68,43 @@ const GetLink=async (req, res) => {
 
       console.log( newurl);
       console.log(typeof(newurl))
-      let lastSegment = newurl.split("/").pop(); 
-    
+      
+       
     // Update newurl with the new base URL + last segment
-    newurl = `https://url-shortner-g9ip.onrender.com/${lastSegment}`;
+    newurl = `https://url-shortner-g9ip.onrender.com/${hashedKey}`;
 
       return newurl
      }
      
     // Generate a new short URL
-     newurl = `url-shortner-g9iponrendercom/${dbEntry.counter}`
+     newurl = `url-shortner-g9iponrendercom/${hashedKey}`
     
     // ✅ Correct way to store with expiry
-    let val=String(dbEntry.counter)
+    
    
      
       
 
-    dbEntry.urlMap.set(newurl, url);
    
-    dbEntry.URL.set(hashedKey,newurl);
+    dbEntry.URL.set(hashedKey,url);
    
-    dbEntry.counter++;
+    
     await dbEntry.save();
-     newurl=`https://url-shortner-g9ip.onrender.com/${dbEntry.counter-1}`
+     newurl=`https://url-shortner-g9ip.onrender.com/${hashedKey}`
     return newurl
   }
   const StoreLink=async (req, res) => {
-
-    const hashKey = (url) => crypto.createHash('sha256').update(url).digest('hex');
+console.log('in  executing')
+    const hashKey = (url) => crypto.createHash('md5').update(url).digest('hex');
 //console.log(req.headers.authorization);
     let accessToken = req.headers.authorization;
    
     const { url } = req.body;
-    
+    console.log(url);
     if (!accessToken) {
       console.log('go')
       
-      return res.redirect("http/auth/google");
+      return res.redirect("https://url-shortner-g9ip.onrender.com/auth/google/callback");
     }
   
     try {
@@ -107,13 +128,14 @@ const GetLink=async (req, res) => {
       
       if (err.response?.status === 400) {
         console.error("Token Expired. Refreshing...");
-    
-        // 🔹 Find user based on stored email (use accessToken to get email)
-        // const response = await axios.get(
-        //   https://oauth2.googleapis.com/tokeninfo?access_token=${accessToken}
-        // );
-    
-        const user = await User.findOne({ email:'kshitijkamble30@gmail.com'});
+        console.log("Token expiring")
+      // Find user based on stored email (use accessToken to get email)
+      const response = await axios.get(
+        `https://oauth2.googleapis.com/tokeninfo?access_token=${accessToken}`
+      );
+      console.log(response)
+    let Email=response.data.email
+        const user = await User.findOne({ email:Email});
          
         if (user && user.googleRefreshToken) {
           const newAccessToken = await refreshAccessToken(user.googleRefreshToken);
@@ -127,13 +149,13 @@ const GetLink=async (req, res) => {
             const hashedKey = hashKey(url);
             newurl=await CreateLink(hashedKey,newurl)
 console.log(newurl);
-            res.json({newurl})
+            return res.json({newurl})
            
           }
         }
       }
     
-      return res.json("http/auth/google/callback");
+      return res.json("https://url-shortner-g9ip.onrender.com/auth/google/callback");
     }
   
     
