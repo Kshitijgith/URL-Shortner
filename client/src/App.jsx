@@ -77,7 +77,7 @@ const logout=()=>{
   }
 
   return (
-    <div className="h-screen w-screen flex flex-col items-center bg-gradient-to-br from-gray-700 via-gray-500 to-gray-400">
+    <div className="h-screen w-screen flex flex-col items-center bg-gradient-to-br from-gray-900 via-gray-600 to-gray-500">
 
   <header className="w-100p h-8p sm:h-10p bg-gray-800 flex justify-between items-center px-5 shadow-lg rounded-b-xl">
     <h1 className="sm:w-40p w-20p font-bold text-white h-100p text-2xl flex items-center justify-center">
@@ -132,7 +132,7 @@ const logout=()=>{
       <button
         type="submit"
         disabled={isLoading}
-        className="h-20p w-90p bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600 text-white font-bold rounded-lg focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
+        className="h-20p  w-90p bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600 text-white font-bold rounded-lg focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
       >
         {isLoading ? "Creating..." : "Create Short URL"}
       </button>
