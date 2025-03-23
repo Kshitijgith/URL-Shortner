@@ -77,17 +77,17 @@ const logout=()=>{
   }
 
   return (
-    <div className="h-screen w-screen flex flex-col items-center bg-gradient-to-br from-gray-400 via-gray-300 to-gray-200">
+    <div className="h-screen w-screen flex flex-col items-center bg-gradient-to-br from-gray-700 via-gray-500 to-gray-400">
 
   <header className="w-100p h-8p sm:h-10p bg-gray-800 flex justify-between items-center px-5 shadow-lg rounded-b-xl">
     <h1 className="sm:w-40p w-20p font-bold text-white h-100p text-2xl flex items-center justify-center">
       URL Shortener
     </h1>
-    <div className="h-100p w-50p flex justify-end items-center">
+    <div className="h-100p w-50p sm:w-60p flex justify-end items-center">
       {!token ? (
         <GoogleButton
           type="dark"
-          className="shadow-md hover:shadow-lg h-80p w-30p sm:w-20p"
+          className=" hover:shadow-lg h-70p  w-30p sm:text-xs "
           onClick={() =>
             (window.location.href =
               "https://url-shortner-g9ip.onrender.com/auth/google")
