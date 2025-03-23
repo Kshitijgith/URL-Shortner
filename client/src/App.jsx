@@ -77,75 +77,99 @@ const logout=()=>{
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r bg-slate-300 flex flex-col items-center p-4">
-    {/* Header */}
-    <header className="w-full max-w-3xl bg-white shadow-md rounded-lg p-4 flex justify-between items-center">
-      <h1 className="text-xl font-bold text-gray-800">URL Shortener</h1>
+    <div className="h-screen w-screen flex flex-col items-center bg-gradient-to-br from-gray-400 via-gray-300 to-gray-200">
+
+  <header className="w-100p h-8p sm:h-10p bg-gray-800 flex justify-between items-center px-5 shadow-lg rounded-b-xl">
+    <h1 className="sm:w-40p w-20p font-bold text-white h-100p text-2xl flex items-center justify-center">
+      URL Shortener
+    </h1>
+    <div className="h-100p w-50p flex justify-end items-center">
       {!token ? (
         <GoogleButton
           type="dark"
-          className="shadow-md hover:shadow-lg"
-          onClick={() => window.location.href = "https://url-shortner-g9ip.onrender.com/auth/google"}
+          className="shadow-md hover:shadow-lg h-80p w-30p sm:w-20p"
+          onClick={() =>
+            (window.location.href =
+              "https://url-shortner-g9ip.onrender.com/auth/google")
+          }
         />
       ) : (
         <button
-          className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold h-70p w-30p sm:w-60p rounded-lg transition duration-300 ease-in-out"
           onClick={logout}
         >
           Logout
         </button>
       )}
-    </header>
+      <div className="h-10p w-5p"></div>
+    </div>
+  </header>
 
-    {/* Main Content */}
-    <main className="w-full max-w-3xl bg-white shadow-lg rounded-lg p-6 mt-6">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="url" className="block text-sm font-medium text-gray-700">
-            Enter URL to shorten
-          </label>
-          <input
-            type="url"
-            id="url"
-            required
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            placeholder="https://example.com"
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+  <main className="w-90p sm:w-90p md:w-50p lg:w-40p h-50p bg-gray-800 shadow-2xl rounded-lg flex flex-col items-center p-5 mt-5">
+    <form
+      onSubmit={handleSubmit}
+      className="h-100p w-100p flex flex-col items-center"
+    >
+      <div className="h-10p w-100p"></div>
+      <div className="h-30p w-100p flex flex-col">
+        <label
+          htmlFor="url"
+          className="h-40p text-xl font-medium text-gray-300 flex items-center"
         >
-          {isLoading ? "Creating..." : "Create Short URL"}
-        </button>
-      </form>
-
-      {error && <p className="mt-4 text-red-600 text-center">{error}</p>}
+          Enter URL to shorten
+        </label>
+        <input
+          type="url"
+          id="url"
+          required
+          className="h-70p w-100p border border-gray-600 bg-gray-700 text-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          placeholder="https://example.com"
+        />
+      </div>
+      <div className="h-10p w-100p"></div>
+      <button
+        type="submit"
+        disabled={isLoading}
+        className="h-20p w-90p bg-gradient-to-r from-blue-600 to-green-500 hover:from-blue-700 hover:to-green-600 text-white font-bold rounded-lg focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
+      >
+        {isLoading ? "Creating..." : "Create Short URL"}
+      </button>
+      {error && (
+        <p className="text-red-500 text-center mt-2">
+          {error}
+        </p>
+      )}
 
       {shortUrl && (
-        <div className="mt-6 p-4 bg-gray-100 rounded-lg shadow-md text-center">
-          <p className="text-sm font-medium text-gray-700 mb-2">Shortened URL:</p>
-          <div className=" rounded-lg p-4 flex flex-col items-center">
+        <div className="w-100p h-60p bg-gray-700 rounded-lg shadow-md flex flex-col items-center mt-5">
+          <p className="text-sm font-medium text-gray-300 h-30p flex items-center justify-center">
+            Shortened URL:
+          </p>
+          <div className="h-50p w-90p flex flex-col items-center">
             <button
-              className="text-black bg-blue-300 font-bold py-2 px-4 rounded w-full mb-2"
-              onClick={() => window.location.href = shortUrl}
+              className="text-white bg-blue-600 font-bold h-80p w-100p rounded-lg hover:bg-blue-700"
+              onClick={() => (window.location.href = shortUrl)}
             >
-              {shortUrl}
+              {shortUrl.length > 50
+                ? shortUrl.slice(0, 25) + "..." + shortUrl.slice(-10)
+                : shortUrl}
             </button>
             <button
               onClick={() => navigator.clipboard.writeText(shortUrl)}
-              className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition w-full"
+              className="h-60p w-100p bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-300 ease-in-out mt-2"
             >
               Copy
             </button>
           </div>
         </div>
       )}
-    </main>
-  </div>
+    </form>
+  </main>
+</div>
+
+  
   )
 }
 
